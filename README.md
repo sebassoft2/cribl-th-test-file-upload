@@ -7,6 +7,7 @@ You are part of an organization that ships software that runs on customers envir
 This is a NodeJS application developed using Express to create a REST API. It has a file router, hosting 4 services: upload, uploadBinary, list and download. In order to allow big files to be uploaded simultaneously I've used NodeJS Streams in pipeline, reading from the request object and writing in chunks into the disk asynchronously. I've implemented 2 upload methods: 
 
 - upload: Allows you to upload files using form multi-part format. In order to parse HTML request, I've used a library called BusBoy. 
+
 - uploadBinary: Since one of the requirements was to minimize external depedencies, I've implemented this second method, that takes a file in binary format from the request, using only NodeJS native code for demonstration purposes. 
 
 * both upload services receive an optional parameter 'force' that will overwrite existing files with the same name.
@@ -71,4 +72,4 @@ List of available routes:
 `GET /file/list` - list uploaded files\
 `POST /file/upload` - upload files in HTTP Form multi-part format\
 `POST /file/uploadBinary` - upload files in binary format\
-`POST /file/download` - download files\
+`POST /file/download` - download file by filename
