@@ -22,11 +22,11 @@ npm install
 ## Libraries used
 
 - **busboy**: [BusBoy](https://github.com/mscdex/busboy) Module for parsing incoming HTML form data. I've used it only to provide an upload option using multi-part form data.
-- **express** [ExpressJS](https://expressjs.com/) Web framework for NodeJS. I've used it to build the REST API.
-- **express-oauth-server** [Express OAuth Server](https://github.com/oauthjs/express-oauth-server) Module for implementing OAuth2 with Express in NodeJS.
-- **http-status** [HTTPStatus](https://www.npmjs.com/package/http-status) Utility to interact with HTTP status codes. I've used it only to avoid hardcode HTTP Status codes.
+- **express**: [ExpressJS](https://expressjs.com/) Web framework for NodeJS. I've used it to build the REST API.
+- **express-oauth-server**: [Express OAuth Server](https://github.com/oauthjs/express-oauth-server) Module for implementing OAuth2 with Express in NodeJS.
+- **http-status**: [HTTPStatus](https://www.npmjs.com/package/http-status) Utility to interact with HTTP status codes. I've used it only to avoid hardcode HTTP Status codes.
 - **supertest**: [SuperTest](https://github.com/visionmedia/supertest) HTTP Assertions module. I've used it for unit testing purposes.
-- **jest** [Jest](https://jestjs.io/) Javascript Testing Framework. I've used it for unit testing purposes.
+- **jest**: [Jest](https://jestjs.io/) Javascript Testing Framework. I've used it for unit testing purposes.
 
 ## Commands
 
@@ -68,7 +68,7 @@ src\
 List of available routes:
 
 **File routes**:\
-`GET /file/list` - list uploaded files
-`POST /file/upload` - upload files in HTTP Form multi-part format
-`POST /file/uploadBinary` - upload files in binary format
-`POST /file/download` - download files
+`GET /file/list` - list uploaded files\
+`POST /file/upload` - upload files in HTTP Form multi-part format\
+`POST /file/uploadBinary` - upload files in binary format\
+`POST /file/download` - download files\
