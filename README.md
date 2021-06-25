@@ -41,10 +41,10 @@ Testing:
 
 ```bash
 # run all tests
-npm test
+npm run test
 
 # run test coverage
-npm coverage
+npm run coverage
 ```
 
 ## Testing
