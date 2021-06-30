@@ -1,14 +1,32 @@
 const request = require('supertest');
 const app = require('../../src/app');
 const httpStatus = require('http-status');
-const setupUpload = require('../utils/setupUpload');
+const {jestBootstrap, removeUploadFolder, createUploadFolder} = require('../utils/setupTest');
 
-setupUpload();
+jestBootstrap();
 
 describe('File routes', () => {
     
     describe('POST /file/upload', () => {
+
+        test('upload folder does not exist will throw error', async () => {
+
+            removeUploadFolder();
+
+            const res = await request(app)
+                .post('/file/upload')
+                .attach('file', './test/assets/testFile.txt')
+                .expect(httpStatus.BAD_REQUEST)
+            
+            expect(res.body).toEqual({
+                code: httpStatus.BAD_REQUEST,
+                message: 'Configuration error. Upload folder does not exists or is not writable.'
+            })                
+        })
+
         test('upload a wrong file type will throw error', async () => {
+
+            createUploadFolder();
 
             const res = await request(app)
                 .post('/file/upload')
@@ -62,7 +80,25 @@ describe('File routes', () => {
     })
 
     describe('POST /file/uploadBinary', () => {
+
+        test('upload folder does not exist will throw error', async () => {
+
+            removeUploadFolder();
+
+            const res = await request(app)
+                .post('/file/uploadBinary')
+                .attach('file', './test/assets/testFile.txt')
+                .expect(httpStatus.BAD_REQUEST)
+            
+            expect(res.body).toEqual({
+                code: httpStatus.BAD_REQUEST,
+                message: 'Configuration error. Upload folder does not exists or is not writable.'
+            })                
+        })
+
         test('filename parameter is mandatory', async () => {
+
+            createUploadFolder();
 
             const res = await request(app)
                 .post('/file/uploadBinary')
@@ -129,15 +165,14 @@ describe('File routes', () => {
 
     describe('POST /file/list', () => {
   
-        test('should return array of 2 test files in configured upload folder', async () => {
+        test('should return array of test files in configured upload folder', async () => {
 
             const res = await request(app)
                 .get('/file/list')
                 .expect(httpStatus.OK);
 
-            expect(res.body.length).toEqual(2);
-            expect(res.body[0].filename).toEqual('testFile.tgz');
-            expect(res.body[1].filename).toEqual('testFileB.tgz');
+            expect(res.body.length).toEqual(1);
+            expect(res.body[0].filename).toEqual('testFileB.tgz');
     
         })
     })
@@ -153,7 +188,7 @@ describe('File routes', () => {
             expect(res.body).toEqual({
                 code: httpStatus.BAD_REQUEST,
                 message: 'filename parameter is mandatory'
-            })                
+            })
         })
 
         test('incorrect filename should return file does not exist', async () => {
@@ -165,14 +200,16 @@ describe('File routes', () => {
             expect(res.body).toEqual({
                 code: httpStatus.NOT_FOUND,
                 message: 'File does not exists'
-            })                
+            })
         })
 
         test('correct file download should return test file content', async () => {
 
             const res = await request(app)
-                .get('/file/download?filename=testFile.tgz')
+                .get('/file/download?filename=testFileB.tgz')
                 .expect(httpStatus.OK)
+
+            removeUploadFolder();
         })
     })
-})  
+})
